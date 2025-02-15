@@ -27,7 +27,7 @@ def forgot_password():
             return redirect(url_for('login'))
         else:
             flash('ამ ელ.ფოსტით მომხმარებელი არ მოიძებნა.', 'danger')
-    return render_template('forgot_password.html', form=form)
+    return render_template('forgot_password.html', form=form, title="პაროლის აღდგენა - ვეფხისტყაოსანი")
 
 # 📌 პაროლის განახლების როუტი
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
