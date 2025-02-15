@@ -112,7 +112,7 @@ def confirm_email(token):
 @app.route("/admin/users")
 @login_required
 def view_users():
-    if current_user.id == 1:
+    if current_user.username == "sandroqatamadze":
         users = User.query.all()
         return render_template("admin_users.html", users=users, title="მონაცემების ხილვა")
     else:
@@ -127,7 +127,7 @@ def noadmin():
 @app.route("/admin")
 @login_required
 def admin():
-    if current_user.id == 1:
+    if current_user.username == "sandroqatamadze":
         return render_template("admin.html", title="ადმინის გვერდი - ვეფხისტყაოსანი")
     else:
         flash("Sorry but you are not the admin")
@@ -215,6 +215,11 @@ def register():
     
     print(form.errors) 
     return render_template("register.html", form=form, title="რეგისტრაცია - ვეფხისტყაოსანი")
+
+
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html", title="უსაფრთხოების პოლიტიკა - ვეფხისტყაოსანი")
 
 if __name__ == "__main__":  
     app.run(debug=True)
