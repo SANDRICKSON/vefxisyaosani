@@ -52,6 +52,11 @@ def reset_password(token):
 
     return render_template('reset_password.html', form=form)
 
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('500.html', title="სერვერის შეცდომა - ვეფხისტყაოსანი"), 500
+
+
 
 def send_verification_email(user_email):
     token = generate_verification_token(user_email)
