@@ -2,62 +2,102 @@
 
 {% block content %}
     
-    <div class="container border rounded h-74 mb-2 p-4">
-      <form method="post">
-        {{ form.hidden_tag() }}
-        
-        <div class="row mb-3">
-            <label for="{{ form.username.id }}" class="col-sm-2 col-form-label">{{ form.username.label }}</label>
-            <div class="col-sm-10">
-                {{ form.username(class="form-control", placeholder="შეიყვანეთ სახელი") }}
-                {% if form.username.errors %}
-                    <div class="text-danger">
-                        {% for error in form.username.errors %}
-                            <small>{{ error }}</small><br>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+    <div class="container border rounded shadow-lg p-4 mt-4 bg-light">
+        <form method="post">
+            {{ form.hidden_tag() }}
 
-        <div class="row mb-3">
-            <label for="{{ form.password.id }}" class="col-sm-2 col-form-label">{{ form.password.label }}</label>
-            <div class="col-sm-10">
-                {{ form.password(class="form-control", placeholder="შეიყვანეთ პაროლი") }}
-                {% if form.password.errors %}
-                    <div class="text-danger">
-                        {% for error in form.password.errors %}
-                            <small>{{ error }}</small><br>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+            <div class="row mb-3">
+                <label for="{{ form.username.id }}" class="col-sm-2 col-form-label fw-bold">{{ form.username.label }}</label>
+                <div class="col-sm-10">
+                    {{ form.username(class="form-control rounded-pill shadow-sm", placeholder="შეიყვანეთ სახელი") }}
+                    {% if form.username.errors %}
+                        <div class="text-danger mt-1">
+                            {% for error in form.username.errors %}
+                                <small>⚠ {{ error }}</small><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-        </div>
 
-        <div class="row mb-3">
-            <div class="col-sm-10 offset-sm-2">
-                {{ form.submit(class="btn btn-primary") }}
+            <div class="row mb-3">
+                <label for="{{ form.password.id }}" class="col-sm-2 col-form-label fw-bold">{{ form.password.label }}</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        {{ form.password(class="form-control rounded-pill shadow-sm", placeholder="შეიყვანეთ პაროლი", id="password") }}
+                        <span class="input-group-text bg-white border-0 shadow-sm rounded-pill" onclick="togglePassword('password', 'togglePasswordIcon')">
+                            <i id="togglePasswordIcon" class="fa fa-eye text-primary"></i>
+                        </span>
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="text-danger mt-1">
+                            {% for error in form.password.errors %}
+                                <small>⚠ {{ error }}</small><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        
-      </form>
+
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-2">
+                    {{ form.submit(class="btn btn-primary w-100 rounded-pill shadow-sm") }}
+                </div>
+            </div>
+            
+        </form>
     </div>
-    <a href="{{ url_for('forgot_password') }}">პაროლი დაგავიწყდა?</a>
+
+    <div class="text-center mt-3">
+        <a href="{{ url_for('forgot_password') }}" class="text-decoration-none text-primary fw-bold">🔑 პაროლი დაგავიწყდა?</a>
+    </div>
+
     <style>
-        label {
-            font-family: "BPG Classic Medium", sans-serif;
-            font-size: 20px;
+        body {
+            background: #f8f9fa;
         }
-        .btn {
+        label, .btn, ::placeholder {
             font-family: "BPG Classic Medium", sans-serif;
+            font-size: 18px;
         }
-        label, ::placeholder {
-            font-family: "BPG Classic Medium", sans-serif;
-            font-size: 20px;
+        .form-control {
+            font-weight: bold;
+            padding: 10px 15px;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0056b3, #007bff);
+        }
+        .input-group-text {
+            cursor: pointer;
         }
         .text-danger {
             font-size: 14px;
         }
     </style>
+
+    <script>
+        function togglePassword(fieldId, iconId) {
+            var passwordField = document.getElementById(fieldId);
+            var icon = document.getElementById(iconId);
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
+
+    <!-- FontAwesome-ის ბიბლიოთეკის დამატება -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 {% endblock %}
